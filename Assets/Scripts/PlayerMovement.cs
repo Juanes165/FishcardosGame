@@ -1,45 +1,58 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float runSpeed = 2;
+    public float runSpeed = 50f;
     public float jumpSpeed = 2;
-
     public float fallMultiplier = 0.5f;
     public float lowJumpMultiplier = 1f;
-
     Rigidbody2D rigidBody;
+    
+    bool canJump;
 
     // Start is called before the first frame update
     void Start()
     {
-        rigidBody = GetComponent<Rigidbody2D>();    
+        canJump = true;
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    private void Update()
     {
-        if(Input.GetKey("d") || Input.GetKey("right"))
+        if (Input.GetKey("a"))
         {
-            rigidBody.velocity = new Vector2(runSpeed, rigidBody.velocity.y);
+            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-500f * Time.deltaTime, 0));
+            gameObject.GetComponent<Animator>().SetBool("moving", true);
+            gameObject.GetComponent<SpriteRenderer>().flipX = true;
         }
-        else if(Input.GetKey("a") || Input.GetKey("left"))
+        if (Input.GetKey("d"))
         {
-            rigidBody.velocity = new Vector2(-runSpeed, rigidBody.velocity.y);
-        }
-        else{
-            rigidBody.velocity = new Vector2(0, rigidBody.velocity.y);
+            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(500f * Time.deltaTime, 0));
+            gameObject.GetComponent<Animator>().SetBool("moving", true);
+            gameObject.GetComponent<SpriteRenderer>().flipX = false;
         }
 
-        if(rigidBody.velocity.y < 0)
+        if (!Input.GetKey("d") && !Input.GetKey("a"))
         {
-            rigidBody.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier) * Time.deltaTime;
+            gameObject.GetComponent<Animator>().SetBool("moving", false);
         }
-        if(rigidBody.velocity.y > 0 && !Input.GetKey("space"))
+
+        if (Input.GetKeyDown("w") && canJump)
         {
-            rigidBody.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier) * Time.deltaTime;
+            canJump = false;
+            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 130f));
+        }
+        
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform.CompareTag("ground"))
+        {
+            canJump = true;
         }
     }
 }
