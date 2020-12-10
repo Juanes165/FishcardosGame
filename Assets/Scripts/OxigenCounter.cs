@@ -39,7 +39,8 @@ public class OxigenCounter : MonoBehaviour
         }
         else
         {
-            oxigen = 0.8f - (animationPlayed / animationDuration);
+            oxigen = 1f;
+            //oxigen = 0.8f - (animationPlayed / animationDuration);
         }
         Debug.Log("Oxigeno: ");
         Debug.Log(oxigen);
