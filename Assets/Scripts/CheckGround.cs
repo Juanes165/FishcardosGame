@@ -6,7 +6,7 @@ public class CheckGround : MonoBehaviour
 {
     public static bool isGrounded;
 
-    private void onTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         isGrounded = true;
     }

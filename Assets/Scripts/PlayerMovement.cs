@@ -5,17 +5,22 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float runSpeed = 50f;
-    public float jumpSpeed = 2;
+    public float speed = 250f;
+    public float jumpSpeed = 200f;
     public float fallMultiplier = 0.5f;
     public float lowJumpMultiplier = 1f;
     Rigidbody2D rigidBody;
+    Animator animator;
+    SpriteRenderer spriteRenderer;
     
     bool canJump;
 
     // Start is called before the first frame update
     void Start()
     {
+        rigidBody = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         canJump = true;
     }
 
@@ -24,30 +29,30 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Input.GetKey("a"))
         {
-            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(-500f * Time.deltaTime, 0));
-            gameObject.GetComponent<Animator>().SetBool("moving", true);
-            gameObject.GetComponent<SpriteRenderer>().flipX = true;
+            rigidBody.AddForce(new Vector2(-speed * Time.deltaTime, 0));
+            animator.SetBool("moving", true);
+            spriteRenderer.flipX = true;
         }
         if (Input.GetKey("d"))
         {
-            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(500f * Time.deltaTime, 0));
-            gameObject.GetComponent<Animator>().SetBool("moving", true);
-            gameObject.GetComponent<SpriteRenderer>().flipX = false;
+            rigidBody.AddForce(new Vector2(speed * Time.deltaTime, 0));
+            animator.SetBool("moving", true);
+            spriteRenderer.flipX = false;
         }
 
         if (!Input.GetKey("d") && !Input.GetKey("a"))
         {
-            gameObject.GetComponent<Animator>().SetBool("moving", false);
+            animator.SetBool("moving", false);
         }
 
-        if (Input.GetKeyDown("w") && canJump)
+        if (Input.GetKeyDown("w") && CheckGround.isGrounded)
         {
-            canJump = false;
-            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 130f));
+            //canJump = false;
+            rigidBody.AddForce(new Vector2(0, jumpSpeed));
         }
         
     }
-
+    /*
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.CompareTag("ground"))
@@ -55,4 +60,5 @@ public class PlayerMovement : MonoBehaviour
             canJump = true;
         }
     }
+    */
 }
