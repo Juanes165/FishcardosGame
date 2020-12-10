@@ -12,21 +12,18 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D rigidBody;
     Animator animator;
     SpriteRenderer spriteRenderer;
-    
-    bool canJump;
-
     // Start is called before the first frame update
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        canJump = true;
     }
 
     // Update is called once per frame
     private void Update()
     {
+        //MOVERSE, IZQUIERDA Y DERECHA
         if (Input.GetKey("a"))
         {
             rigidBody.AddForce(new Vector2(-speed * Time.deltaTime, 0));
@@ -39,26 +36,46 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("moving", true);
             spriteRenderer.flipX = false;
         }
-
+        //ESTADO QUIETO
         if (!Input.GetKey("d") && !Input.GetKey("a"))
         {
             animator.SetBool("moving", false);
         }
-
-        if (Input.GetKeyDown("w") && CheckGround.isGrounded)
+        //VERIFICAR SI ESTÁ EN EL SUELO PARA SALTAR
+        if (Input.GetKeyDown("w") && CheckGround.isGrounded || Input.GetKeyDown("space") && CheckGround.isGrounded)
         {
-            //canJump = false;
             rigidBody.AddForce(new Vector2(0, jumpSpeed));
         }
+        //NO MOVERSE SI SE MUEVE HACIA AMBOS LADOS
+        if (Input.GetKey("d") && Input.GetKey("a"))
+        {
+            animator.SetBool("moving", false);
+        }
+        
+        
+        //AGACHARSE
+        
+        if (Input.GetKey("s"))
+        {
+            animator.SetBool("bend", true);
+        }
+
+        if (!Input.GetKey("s"))
+        {
+            animator.SetBool("bend", false);
+        }
+
+        if ((Input.GetKey("s")) && Input.GetKey("a") || (Input.GetKey("s")) && Input.GetKey("d"))
+        {
+            animator.SetBool("move_bend", true);
+        }
+        
+        if (!((Input.GetKey("s")) && Input.GetKey("a") || (Input.GetKey("s")) && Input.GetKey("d")))
+        {
+            animator.SetBool("move_bend", false);
+        }
+        
+        
         
     }
-    /*
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.transform.CompareTag("ground"))
-        {
-            canJump = true;
-        }
-    }
-    */
 }
