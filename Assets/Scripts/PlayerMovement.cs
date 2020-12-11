@@ -74,8 +74,6 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("move_bend", false);
         }
-        
-        
-        
+
     }
 }
