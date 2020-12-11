@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -72,6 +73,10 @@ public class PlayerMovement : MonoBehaviour
         if (!((Input.GetKey("s")) && Input.GetKey("a") || (Input.GetKey("s")) && Input.GetKey("d")))
         {
             animator.SetBool("move_bend", false);
+        }
+        if (WinnerController.win)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
 
     }
