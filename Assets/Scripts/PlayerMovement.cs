@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("moving", false);
         }
         //VERIFICAR SI ESTÁ EN EL SUELO PARA SALTAR
-        if (Input.GetKeyDown("w") && CheckGround.isGrounded || Input.GetKeyDown("space") && CheckGround.isGrounded)
+        if ((Input.GetKeyDown("w") && CheckGround.isGrounded) || (Input.GetKeyDown("space") && CheckGround.isGrounded))
         {
             rigidBody.AddForce(new Vector2(0, jumpSpeed));
         }
@@ -54,7 +54,6 @@ public class PlayerMovement : MonoBehaviour
         
         
         //AGACHARSE
-        
         if (Input.GetKey("s"))
         {
             animator.SetBool("bend", true);
