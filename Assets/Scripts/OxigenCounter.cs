@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class OxigenCounter : MonoBehaviour
 {
+    public GameObject player;
+
     private Animator animator;
+    private AnimatorClipInfo[] animationClip;
     private float animationDuration;
     private float animationPlayed;
     private float speed = 0.2f;
@@ -17,17 +20,18 @@ public class OxigenCounter : MonoBehaviour
         animator = GetComponent<Animator>();
         animator.speed = speed;
         animationDuration = 1 / speed;
+        animationClip = animator.GetCurrentAnimatorClipInfo(0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        AnimatorClipInfo[] animationClip = animator.GetCurrentAnimatorClipInfo(0);
-        AnimatorStateInfo animationInfo = animator.GetCurrentAnimatorStateInfo(0);
-        time = animationClip[0].clip.length * animationInfo.normalizedTime * animationDuration;
-        if(time > animationDuration){
-            //Debug.Log("Se acabo el oxigeno");
+        
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("OxigenFinished"))
+        {
+            player.transform.GetComponent<Respawn>().PlayerRespawn();
         }
+        
     }
 
     public void dropCollected()
@@ -40,13 +44,11 @@ public class OxigenCounter : MonoBehaviour
         else
         {
             oxigen = 1f;
-            //oxigen = 0.8f - (animationPlayed / animationDuration);
         }
-        Debug.Log("Oxigeno: ");
-        Debug.Log(oxigen);
         animator.Play("Oxigen", 0, oxigen);
         animationDuration = 5 * (oxigen);
-        Debug.Log("Animacion: ");
-        Debug.Log(animationDuration);
+
+        
+        
     }
 }
