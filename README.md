@@ -3,9 +3,9 @@ Proyecto final del curso de Desarrollo de Videojuegos
 
 Desarrollado por: 
 
-Juan David Bonilla Alvarez
+Juan David Bonilla Alvarez - Juanda2207
 
-Juan Esteban Betancourt Narváez
+Juan Esteban Betancourt Narváez - Juanes165
 
 
 # Descripción
