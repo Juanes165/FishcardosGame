@@ -20,5 +20,3 @@ se mantiene con vida tomando gotas de agua que encuentra por el camino, pero no 
 de un nuevo hogar, pues siempre se consideró muy fino y de alta alcurnia, pero la vida da muchas vueltas y ahora Fishcardo se encuentra en una situación de vida o muerte, donde no importa que tan elegante sea.
 
 Acompaña a Fishcardo en esta aventura, donde tendrá que hacer uso de todas sus capacidades para conseguir su objetivo.
-
-README!
