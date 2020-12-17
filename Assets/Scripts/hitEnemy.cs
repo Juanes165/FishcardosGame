@@ -7,7 +7,7 @@ public class hitEnemy : MonoBehaviour
 {
     public Collider2D collider;
     public SpriteRenderer spriteRenderer;
-    public AudioSource audio;
+    public AudioSource clip;
 
     public float jumpForce = 150f;
 
@@ -19,7 +19,7 @@ public class hitEnemy : MonoBehaviour
             spriteRenderer.enabled = false;
             Invoke("die", 0.1f);
 
-            audio.Play();
+            clip.Play();
         }
     }
 
